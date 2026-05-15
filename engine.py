@@ -336,12 +336,13 @@ Mix naturally — don't force either language. Sound like a smart Pakistani/Indi
 }
 
 def build_prompt(niche: str, hook_style: dict, variation: str, tone_level: int, language: str = "English") -> str:
+    """Build a concise, high-signal prompt for one post variation."""
     profile = NICHE_PROFILES[niche]
     hook_examples = "\n".join([f'  • "{ex}"' for ex in hook_style["examples"]])
     hashtags_sample = " ".join(random.sample(profile["hashtag_pool"], min(5, len(profile["hashtag_pool"]))))
     lang = LANGUAGE_INSTRUCTIONS.get(language, LANGUAGE_INSTRUCTIONS["English"])
 
-    prompt = f"""You are an elite viral Facebook content strategist with 10 years of growth experience.
+    return f"""You are an elite viral Facebook content strategist with 10 years of growth experience.
 Your posts consistently get 10x more engagement than average.
 
 ═══ MISSION ═══
@@ -400,67 +401,6 @@ Suggested hashtags to end with: {hashtags_sample}
 9. Every line must earn its place. No filler. No waffle. No vague statements.
 
 Write the post now. Start directly with the hook:"""
-
-    return prompt
-    profile = NICHE_PROFILES[niche]
-    hook_examples = "\n".join([f'  • "{ex}"' for ex in hook_style["examples"]])
-    hashtags_sample = " ".join(random.sample(profile["hashtag_pool"], min(5, len(profile["hashtag_pool"]))))
-
-    prompt = f"""You are an elite viral Facebook content strategist with 10 years of growth experience.
-Your posts consistently get 10x more engagement than average.
-
-═══ MISSION ═══
-Write a Facebook post that stops the scroll, triggers emotion, and drives comments/shares.
-
-═══ PARAMETERS ═══
-NICHE: {niche}
-TARGET AUDIENCE: {profile['audience']}
-CONTENT TONE STYLE: {profile['tone_descriptor']}
-AGGRESSION LEVEL: {tone_descriptor(tone_level)} (level {tone_level}/10)
-HOOK STYLE: {hook_style['name']}
-  Psychology: {hook_style['psychology']}
-  Example hooks (inspire, do NOT copy exactly):
-{hook_examples}
-VARIATION TYPE: {variation}
-  Instruction: {VARIATION_INSTRUCTIONS[variation]}
-
-═══ MANDATORY POST STRUCTURE ═══
-Write the post in this EXACT 4-part format, each section separated by a blank line:
-
-[PART 1 — HOOK]
-One single, powerful scroll-stopping line. Use the {hook_style['id']} hook style.
-Short. Punchy. Makes the reader NEED to keep reading.
-
-[PART 2 — VALUE]
-2-3 short lines delivering the core insight or benefit.
-One idea per line. Mobile-friendly. No waffle.
-
-[PART 3 — SECOND PUNCH]
-1-2 lines that land a fresh angle or reinforce the message with new energy.
-Hit them again from a different direction.
-
-[PART 4 — CTA]
-One dynamic call to action. Make it feel natural, not salesy.
-Drive comments, follows, or saves. Relevant to {niche}.
-Suggested hashtags to end with: {hashtags_sample}
-
-═══ HARD RULES ═══
-1. Return ONLY the post text. Zero labels. Zero "Here is your post:" preamble.
-2. Max 12 words per line. Short = readable on mobile.
-3. Use {profile['emojis']} emojis naturally — 2 to 5 total.
-4. End with 4-6 relevant hashtags on the final line only.
-5. BANNED PHRASES (instant reject): "stay motivated", "work hard", "believe in yourself",
-   "never give up", "you can do it", "success is a journey", "dream big", "be positive",
-   "in today's world", "game changer", "think outside the box", "the future is bright",
-   "most people don't realize", "it's no secret", "at the end of the day".
-6. Do NOT start with "In today's", "The truth is", "As we all know", "Most people".
-7. Be SPECIFIC. Give REAL insight. If someone can nod and move on — rewrite it.
-8. Make someone feel: "I've never heard it put exactly that way."
-9. Every line must earn its place. No filler. No waffle. No vague statements.
-
-Write the post now. Start directly with the hook:"""
-
-    return prompt
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  SINGLE POST GENERATOR (with anti-generic retry loop)
