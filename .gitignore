@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Streamlit/local secrets
+.streamlit/secrets.toml
+fb_config.json
+fb_history.json
+schedule_log.json
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
